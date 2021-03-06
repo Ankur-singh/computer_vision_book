@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smoothing and blurring &#8212; Computer Vision Course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Thresholding" href="05_thres_edge_contour.html" />
+    <link rel="prev" title="Face Detection" href="03_face_detection.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_com.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computer Vision Course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_introduction.html">
+   Introduction to Computer vision
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_drawing.html">
+   More on pixels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_face_detection.html">
+   Face Detection
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Smoothing and blurring
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_thres_edge_contour.html">
+   Thresholding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_machine_learning.html">
+   Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_digit_recognition.html">
+   Digit Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_feature_extraction.html">
+   Feature Extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_ocr.html">
+   Optical Character Recognition(OCR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_conclusion.html">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-blur">
+   Average blur
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gaussian-blur">
+   Gaussian blur
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#median-blur">
+   Median blur
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bilateral-filtering">
+   Bilateral filtering
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#application-time">
+   Application time
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#oil-painting">
+     Oil painting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#water-color">
+     Water color
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pencil-sketch">
+     Pencil Sketch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#arithematic-operations">
+   Arithematic operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bitwise-operations">
+   Bitwise operations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#masking">
+   Masking
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#questionaire">
+   Questionaire
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">imshow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="smoothing-and-blurring">
+<h1>Smoothing and blurring<a class="headerlink" href="#smoothing-and-blurring" title="Permalink to this headline">¶</a></h1>
+<p>We all know what blurring is. It’s what happens when your camera takes a picture out of focus. Sharper regions in the image lose their detail, normally as a disc or circular shape.</p>
+<p>Practically, this means that each pixel in the image is mixed in with its surrounding pixel intensities. This “mixture” of pixels in a neighborhood becomes our blurred pixel.</p>
+<p>While this effect is usually unwanted in our photographs, it’s actually quite helpful when performing image processing tasks. In fact, many image processing and computer vision functions, such as thresholding and edge detection, perform better if the image is first smoothed or blurred.</p>
+<p><strong>Note:</strong> Sometimes the process is also called <strong>filtering</strong> because we use filters (i.e kernels) to smooth the image.</p>
+<p>There are many techniques of smoothing your images. Lets learn them one by one using <em>blurring.png</em> image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/blurring.png&#39;</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="average-blur">
+<h2>Average blur<a class="headerlink" href="#average-blur" title="Permalink to this headline">¶</a></h2>
+<p>We are going to define a <em>k</em> x <em>k</em> sliding window or kernel, where <em>k</em> is always an <strong>odd number</strong>. We will then take the average of all the surrounding pixels in the <em>k</em> x <em>k</em> neighbour hood and assign it to the centre pixel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Blurred Image&#39;</span><span class="p">,</span> <span class="n">blurred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.blur</span></code>, the first parameter is the source image on which were we have to apply average blurring, the second parameter is a tuple specifying the size of the kernel.</p>
+</div>
+<div class="section" id="gaussian-blur">
+<h2>Gaussian blur<a class="headerlink" href="#gaussian-blur" title="Permalink to this headline">¶</a></h2>
+<p>Gaussian blurring is similar to average blurring, but instead of using a simple mean, we are now using a weighted mean, where neighborhood pixels that are closer to the central pixel contribute more “weight” to the average.</p>
+<p>The end result is that our image is more naturally blurred, than using the average method discussed previously.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Blurred Image&#39;</span><span class="p">,</span> <span class="n">blurred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.GaussianBlur</span></code>, to which we have provided three parameter first one being source image, second is the kernel size and the third is value of sigma in gaussian function (don’t worry to much about it, just keep it 0).</p>
+</div>
+<div class="section" id="median-blur">
+<h2>Median blur<a class="headerlink" href="#median-blur" title="Permalink to this headline">¶</a></h2>
+<p>Median Blur is similar to average blur instead of taking average we are going to take median of every pixel in the filter and the value is going to be the value of center pixel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Blurred Image&#39;</span><span class="p">,</span> <span class="n">blurred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.medianBlur</span></code>, the first parameter is source image and the second parameter is kernel size. With median blur we got really good result, it looks even better than the original image.</p>
+<p><strong>Note:</strong> While other filters might be often useful, this method is highly effective in removing salt-and-pepper noise. A larger kernel size will use a larger matrix, and take pixels from further away from the center, which may or may not help. Whether you want a larger or smaller kernel really depends on the image, but 5 is a good number to start with.</p>
+</div>
+<div class="section" id="bilateral-filtering">
+<h2>Bilateral filtering<a class="headerlink" href="#bilateral-filtering" title="Permalink to this headline">¶</a></h2>
+<p>All the above methods tend to blur edges. This is not the case for the bilateral filter, <code class="docutils literal notranslate"><span class="pre">cv2.bilateralFilter</span></code>, it is highly effective at noise removal while preserving edges. But the operation is slower compared to other filters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bilateralFilter</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Blurred Image&#39;</span><span class="p">,</span> <span class="n">blurred</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.bilateralFilter</span></code>, the first parameter is source image, the second parameter is diameter of each pixel neighborhood. The next two arguments are for <em>filter sigma in the color space</em> and <em>filter sigma in the coordinate space</em>. You can read more about the arguments, <a class="reference external" href="https://docs.opencv.org/2.4/modules/imgproc/doc/filtering.html?highlight=bilateralfilter#bilateralfilter">here</a>. Still, the best way would be to try changing them and look at the output image.</p>
+<p>Lets compare the output of all these smoothing techniques, together!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">blur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Average Blur&#39;</span><span class="p">,</span> <span class="n">avg_blur</span><span class="p">)</span>
+
+<span class="n">gas_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Gaussian Blur&#39;</span><span class="p">,</span> <span class="n">gas_blur</span><span class="p">)</span>
+
+<span class="n">med_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">medianBlur</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Median Blur&#39;</span><span class="p">,</span> <span class="n">med_blur</span><span class="p">)</span>
+
+<span class="n">bil_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bilateralFilter</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Bilateral Blur&#39;</span><span class="p">,</span> <span class="n">bil_blur</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The choice of smoothing technique is very application dependent. If preserving edges is important to you, then use bilateral filtering. If your image has salt-and-pepper noise then use median filtering.</p>
+<p>Generally speaking, gaussian filtering is a good starting point. Try playing with the kernel size until you get the desired results. Use other techniques only if you know what you are doing or the application demands it.</p>
+<p><strong>Key Takeaways</strong></p>
+<p>Applying a blur to an image smooths edges and removes noise from the image. Blurring is often used as a first step before we perform Thresholding, Edge Detection, or before we find the Contours of an image. Larger kernel size may remove more noise, but they will also remove detail from an image.</p>
+</div>
+<div class="section" id="application-time">
+<h2>Application time<a class="headerlink" href="#application-time" title="Permalink to this headline">¶</a></h2>
+<p>There are many more smoothing techniques and algorithms in OpenCV, but we cannot learn about them all. Many of them are very application specific and you will hardly need them.</p>
+<p><strong>Note:</strong> There are implementations for almost 2500 algorithms in OpenCV. Nobody can learn all of them. Also, nobody need all these algorithms together. So, when learning OpenCV, you should  focus on learning <em>how to use a particular function ?</em> and don’t worry about the implementation.</p>
+<div class="section" id="oil-painting">
+<h3>Oil painting<a class="headerlink" href="#oil-painting" title="Permalink to this headline">¶</a></h3>
+<p>One very interesting smoothing algorithm that makes your image look like its oil painted !</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/friends2.jpeg&#39;</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">xphoto</span><span class="o">.</span><span class="n">oilPainting</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Amazing, right? OpenCV can make you an artist in real life.</p>
+<p><strong>Exercise:</strong></p>
+<ul class="simple">
+<li><p>Try using a different image. Also, play with the values of the arguments to understand there impact better.</p></li>
+</ul>
+</div>
+<div class="section" id="water-color">
+<h3>Water color<a class="headerlink" href="#water-color" title="Permalink to this headline">¶</a></h3>
+<p>You guessed it, this technique makes your image look like water colored</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/friends2.jpeg&#39;</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">edgePreservingFilter</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sigma_s</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">sigma_r</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You are on a roll! Its time that you showcase your artistic skill to your friends, OpenCV got you covered.</p>
+<p><strong>Exercise:</strong></p>
+<ul class="simple">
+<li><p>Try using a different image. Also, play with the values of <em>sigma_s</em> and <em>sigma_r</em> to understand them better. Don’t change the value of <em>flags</em>.</p></li>
+</ul>
+</div>
+<div class="section" id="pencil-sketch">
+<h3>Pencil Sketch<a class="headerlink" href="#pencil-sketch" title="Permalink to this headline">¶</a></h3>
+<p>Lets try to make a pencil sketch from an image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/friends2.jpeg&#39;</span><span class="p">)</span>
+
+<span class="c1"># pencil sketch code</span>
+<span class="n">img_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">img_invert</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">img_gray</span><span class="p">)</span>
+<span class="n">img_smoothing</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_invert</span><span class="p">,</span> <span class="p">(</span><span class="mi">91</span><span class="p">,</span> <span class="mi">91</span><span class="p">),</span> <span class="n">sigmaX</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigmaY</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">final_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">img_smoothing</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">final_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You have a pencil sketch in less than a second, pretty dope! Lets try to understand it.</p>
+<ul class="simple">
+<li><p><strong>Step - 1:</strong> convert our image to gray-scale</p></li>
+<li><p><strong>Step - 2:</strong> invert the black and white colors in the gray-scale image from <em>step-1</em></p></li>
+<li><p><strong>Step - 3:</strong> take the inverted image from <em>step-2</em> and apply gaussian blur to it</p></li>
+<li><p><strong>Step - 4:</strong> perform <code class="docutils literal notranslate"><span class="pre">(img_gray</span> <span class="pre">*</span> <span class="pre">256)/(255</span> <span class="pre">-</span> <span class="pre">img_smoothing)</span></code> using <code class="docutils literal notranslate"><span class="pre">cv2.divide</span></code></p></li>
+</ul>
+<p>You already know <code class="docutils literal notranslate"><span class="pre">cv2.cvtColor</span></code> and <code class="docutils literal notranslate"><span class="pre">cv2.GaussianBlur</span></code> functions. There are only two new functions here: <code class="docutils literal notranslate"><span class="pre">cv2.divide</span></code> and <code class="docutils literal notranslate"><span class="pre">cv2.bitwise_not</span></code>. They are called <em>arithematic operations</em> and <em>bitwise operations</em> respectively. We will explore them next.</p>
+</div>
+</div>
+<div class="section" id="arithematic-operations">
+<h2>Arithematic operations<a class="headerlink" href="#arithematic-operations" title="Permalink to this headline">¶</a></h2>
+<p>We all know basic arithmetic operations like addition and subtraction. But when working with images, we need to keep in mind the limits of our color space and data type.
+For example, RGB images have pixels that fall within the range [0, 255]. So what happens if we are examining a pixel with intensity 250 and we try to add 10 to it? Under normal arithmetic rules, we would end up with a value of 260. However, since RGB images are represented as 8-bit unsigned integers, 260 is not a valid value.</p>
+<p>So, what should happen? Should we perform a check of some sort to ensure no pixel falls outside the range of [0, 255], thus clipping all pixels to have a minimum value of
+0 and a maximum value of 255? Or do we apply a modulus operation, and “wrap around”? Under modulus rules, adding 10 to 250 would simply wrap around to a value of 4.</p>
+<p>Which way is the “correct” way to handle image additions and subtractions that fall outside the range of [0, 255]? The answer is there is no correct way – it simply depends on how you are manipulate your pixels and what you want the desired results to be. However, be sure to keep in mind that there is a difference between OpenCV and NumPy addition. NumPy will perform modulo arithmetic and “wrap around”. OpenCV, on the other hand, will perform clipping and ensure pixel values never fall outside the range [0, 255].</p>
+<p>But don’t worry! These nuances will become clearer as we explore some code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">200</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># OpenCV arithematics</span>
+<span class="n">max_cv</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">min_cv</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">max_cv</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">min_cv</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(255, 0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Numpy arithematics</span>
+<span class="n">max_np</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">min_np</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+
+<span class="n">max_np</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">min_np</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(44, 156)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember the difference we mentioned between OpenCV and NumPy addition above? Well, ponder for a minute to ensure you fully understand it.</p>
+<p>OpenCV takes care of clipping for us, and ensures that the arithematic operations produces a maximum value of <em>255</em> and a minimum value of <em>0</em>. On the other hand, NumPy does not perform clipping – it instead performs modulo arithmetic and “wraps around”. Once a value of 255 is reached, NumPy wraps around to zero, and then starts counting up again. And if it reaches 0, then it wraps around 255 and starts counting down.</p>
+<p>When performing integer arithmetic, it is important to keep in mind your desired output. Do you want all values to be clipped if they fall outside the range [0, 255]? Then use OpenCV’s built-in methods for image arithmetic.</p>
+<p>Do you want modulus arithmetic operations and have values wrap around if they fall outside the range of [0, 255]? Then simply add and subtract the NumPy arrays as you
+normally would.</p>
+<p><strong>Note:</strong> For all arithematic operations between arrays, the input arrays <em>must have the same size</em>.</p>
+<p>Now that we have explored the caveats of image arithmetic in OpenCV and NumPy, let’s perform the arithmetic on actual images and view the results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/friends2.jpeg&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="n">added</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Added&#39;</span><span class="p">,</span> <span class="n">added</span><span class="p">)</span>
+
+<span class="n">subtracted</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Subtracted&#39;</span><span class="p">,</span> <span class="n">subtracted</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once you have learned arithematic operation using OpenCV, now do you understand what this line of code is doing in the pencil sketch code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">final_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">img_smoothing</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is simply taking two images (i.e. numpy array) and dividing them element-wise. After the division operation, we multiple the resultant array by 256 to bring everything back to [0-255] range.</p>
+<p>In this section, we explored the peculiarities of image arithmetic using OpenCV and NumPy. These caveats are important to keep in mind, otherwise you may get unwanted results when performing arithmetic operations on your images.</p>
+</div>
+<div class="section" id="bitwise-operations">
+<h2>Bitwise operations<a class="headerlink" href="#bitwise-operations" title="Permalink to this headline">¶</a></h2>
+<p>They are very similar to AND, OR, XOR and NOT operations that we learned in our college. The best way to learn about bitwise operation is to use the classic example of square and circle mask.</p>
+<p><strong>Note:</strong> if you don’t remember the truth table for any operation then please refer the table below.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>p</p></th>
+<th class="head"><p>q</p></th>
+<th class="head"><p>p AND q</p></th>
+<th class="head"><p>p OR q</p></th>
+<th class="head"><p>NOT p</p></th>
+<th class="head"><p>p XOR q</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>T</p></td>
+<td><p>T</p></td>
+<td><p>T</p></td>
+<td><p>T</p></td>
+<td><p>F</p></td>
+<td><p>F</p></td>
+</tr>
+<tr class="row-odd"><td><p>T</p></td>
+<td><p>F</p></td>
+<td><p>F</p></td>
+<td><p>T</p></td>
+<td><p>F</p></td>
+<td><p>T</p></td>
+</tr>
+<tr class="row-even"><td><p>F</p></td>
+<td><p>T</p></td>
+<td><p>F</p></td>
+<td><p>T</p></td>
+<td><p>T</p></td>
+<td><p>T</p></td>
+</tr>
+<tr class="row-odd"><td><p>F</p></td>
+<td><p>F</p></td>
+<td><p>F</p></td>
+<td><p>F</p></td>
+<td><p>T</p></td>
+<td><p>F</p></td>
+</tr>
+</tbody>
+</table>
+<p>Lets write some code, shall we?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_canvas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+<span class="n">rectangle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">base_canvas</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="p">(</span><span class="mi">275</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Rectangle&quot;</span><span class="p">,</span> <span class="n">rectangle</span><span class="p">)</span>
+
+<span class="n">base_canvas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+<span class="n">circle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">base_canvas</span><span class="p">,</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span> <span class="n">circle</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We just created two images: one with a fill-in rectangle and other with a fill-in circle.</p>
+<p>In order to utilize bitwise functions, we assume (in most cases) that we are comparing two pixels (the only exception is the NOT function). Hence, its important that input images have same shape, else you will get an error complaining about it. We’ll compare each of the pixels and then construct our bitwise representation.</p>
+<p>Let’s quickly review our binary operations:</p>
+<ul class="simple">
+<li><p><strong>AND:</strong> A bitwise AND is true if and only if both pixels are greater than zero.</p></li>
+<li><p><strong>OR:</strong> A bitwise OR is true if either of the two pixels are greater than zero.</p></li>
+<li><p><strong>XOR:</strong> A bitwise XOR is true if and only if either of the two pixels are greater than zero, but not both.</p></li>
+<li><p><strong>NOT:</strong> A bitwise NOT inverts the “on” and “off” pixels in an image.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_canvas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+<span class="n">circle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">base_canvas</span><span class="p">,</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">base_canvas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s2">&quot;uint8&quot;</span><span class="p">)</span>
+<span class="n">rectangle</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">base_canvas</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="p">(</span><span class="mi">275</span><span class="p">,</span> <span class="mi">275</span><span class="p">),</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">bitwiseAnd</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">rectangle</span><span class="p">,</span> <span class="n">circle</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;AND&quot;</span><span class="p">,</span> <span class="n">bitwiseAnd</span><span class="p">)</span>
+
+<span class="n">bitwiseOr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_or</span><span class="p">(</span><span class="n">rectangle</span><span class="p">,</span> <span class="n">circle</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;OR&quot;</span><span class="p">,</span> <span class="n">bitwiseOr</span><span class="p">)</span>
+
+<span class="n">bitwiseXor</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="n">rectangle</span><span class="p">,</span> <span class="n">circle</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;XOR&quot;</span><span class="p">,</span> <span class="n">bitwiseXor</span><span class="p">)</span>
+
+<span class="n">bitwiseNot</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;NOT&quot;</span><span class="p">,</span> <span class="n">bitwiseNot</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Can you see the output of each operation? Does it all make sense ? Spend a little time to collect your thoughts.</p>
+<p>Can you understand this line now?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img_invert</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">img_gray</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It simply invert our gray-scale image. We would really recommend you to visit the pencil sketch code again and see if you can understand it, now that you know ever function that is used.</p>
+<p>Overall, bitwise operations are extremely simple, yet very powerful. And they are absolutely essentially important in computer vision. But you will say, what are they useful for? Other than inverting gray-scale images, they are many other applications were bitwise operations are used. One such application is masking. We will learn about other applications later in the course. For now, lets talk about masking.</p>
+</div>
+<div class="section" id="masking">
+<h2>Masking<a class="headerlink" href="#masking" title="Permalink to this headline">¶</a></h2>
+<p>Using a mask allows us to focus only on the portions of the image that interests us.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="mi">212</span><span class="p">),</span> <span class="p">(</span><span class="mi">378</span><span class="p">,</span> <span class="mi">358</span><span class="p">),</span> <span class="mi">255</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Mask&quot;</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+<span class="n">masked</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Masked&quot;</span><span class="p">,</span> <span class="n">masked</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We construct a NumPy array, filled with zeros, with the same width and height as our image. We then draw our white rectangle.</p>
+<p>We apply our mask using the <code class="docutils literal notranslate"><span class="pre">cv2.bitwise_and</span></code> function. The first two parameters are the image itself. Obviously, the AND function will be True for all pixels in the image; however, the important part of this function is the <em>mask</em> keyword argument. By supplying a mask, the <code class="docutils literal notranslate"><span class="pre">cv2.bitwise_and</span></code> function only examines pixels that are “on” in the mask. In this case, only pixels that are part of the white rectangle.</p>
+<p><strong>Exercise:</strong></p>
+<ul class="simple">
+<li><p>Try making a circular mask around monica’s face. You already know how to detect faces. Once you have the cordinates of the box, calculate the its center.</p></li>
+</ul>
+<p>We learned many new concepts in this notebook. The best way to make sure you understand all of them, is to make build some applications using them.</p>
+<p><strong>Excercise:</strong></p>
+<ul class="simple">
+<li><p>Refer the previous notebook and try to develop a real-time sketch application. Its should take input images from the webcam and make sketch images in real-time.</p></li>
+<li><p>Try to extend the real-time sketch app to generate oil painting and water color versions of videos from the webcam</p></li>
+<li><p>Apply a circular mask to video feed from the webcam.</p></li>
+</ul>
+</div>
+<div class="section" id="questionaire">
+<h2>Questionaire<a class="headerlink" href="#questionaire" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Smoothing and blurring?</p></li>
+<li><p>When to use median filtering?</p></li>
+<li><p>When to use bilateral filtering?</p></li>
+<li><p>Which one clips the values after 255, Numpy or OpenCV?</p></li>
+<li><p>What will you get if you do <code class="docutils literal notranslate"><span class="pre">244</span> <span class="pre">+</span> <span class="pre">16</span></code>? First using numpy and then using OpenCV arithematics.</p></li>
+<li><p>Bitwise AND, OR, XOR and NOT?</p></li>
+<li><p>Masking ?</p></li>
+</ul>
+<p>In the next notebook, we will learn about thresholding and edge detection.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./course_material"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="03_face_detection.html" title="previous page">Face Detection</a>
+    <a class='right-next' id="next-link" href="05_thres_edge_contour.html" title="next page">Thresholding</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By aiadventures<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

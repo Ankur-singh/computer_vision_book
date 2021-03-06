@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conclusion &#8212; Computer Vision Course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Optical Character Recognition(OCR)" href="09_ocr.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_com.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computer Vision Course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_introduction.html">
+   Introduction to Computer vision
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_drawing.html">
+   More on pixels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_face_detection.html">
+   Face Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_blur.html">
+   Smoothing and blurring
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_thres_edge_contour.html">
+   Thresholding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_machine_learning.html">
+   Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_digit_recognition.html">
+   Digit Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_feature_extraction.html">
+   Feature Extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_ocr.html">
+   Optical Character Recognition(OCR)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#and-one-last-thing-just-like-steve-jobs">
+   And one last thing … (just like Steve Jobs)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#project">
+   Project
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sudoku-solver">
+     Sudoku solver
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#things-to-learn-next">
+   Things to learn next
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="conclusion">
+<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="and-one-last-thing-just-like-steve-jobs">
+<h2>And one last thing … (just like Steve Jobs)<a class="headerlink" href="#and-one-last-thing-just-like-steve-jobs" title="Permalink to this headline">¶</a></h2>
+<p>Before you go, we want you to know a few more things which will help you to realize how everything that you have learnt so far, is used in real life to solve problems. OpenCV also provides support for building GUIs. You can create and manipulate windows, add trackbars to the windows, handle simple mouse events as well as keyboard commands. We have aleady seen how we can caputure key press from keyboard.</p>
+<p>Here are some demo applications that we have built for you.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../nbs/paint.html"><span class="doc std std-doc">Paint application</span></a></p></li>
+<li><p><a class="reference internal" href="../nbs/color_picker.html"><span class="doc std std-doc">Color picker</span></a></p></li>
+<li><p><a class="reference internal" href="../nbs/inpaint.html"><span class="doc std std-doc">Image inpainting</span></a></p></li>
+</ul>
+<p>Here are some more applications that are not GUI based, but are very interesting:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../nbs/authenticate.html"><span class="doc std std-doc">Authenticate office employees</span></a>: Office In time scanner. Both scanning timing and person’s name gets saved in a new file. This is how the <a class="reference external" href="https://www.linkedin.com/posts/pranav-uikey-b49360140_opencv-authencation-python3-ugcPost-6715245542315761664-sRp1">final output</a> looks.</p></li>
+</ul>
+<p><strong>Note:</strong> we will keep adding more applications to these sections.</p>
+<p><a class="reference external" href="https://docs.opencv.org/2.4/modules/highgui/doc/highgui.html">Here</a> is a complete list of commands that exist in OpenCV for working with GUIs. Try building your own apps for better understanding.</p>
+</div>
+<div class="section" id="project">
+<h2>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h2>
+<p>Building projects is a great way of learning and exploring new things. Projects also help you to understand the process of <em>Software Development</em> in a broader way. We highly recommend developing project. For now, we have some assignments to get started. Our mentors will be happy to help you in the process.</p>
+<p>Until now, you have been building small applications (with 2-3 intermediate task). Lets try to build something big, something that has 5-6 intermediate tasks. The project will help you develop your skills like planning your projects, breaking it down to smallers tasks, combining the inputs and outputs from different tasks and a lot many things.</p>
+<div class="section" id="sudoku-solver">
+<h3>Sudoku solver<a class="headerlink" href="#sudoku-solver" title="Permalink to this headline">¶</a></h3>
+<p>The task is build an application that would take a sudoku puzzle as input image and return a solved puzzle. Its an amazing application to build because it covers everything (almost) that we have learned in the course. Building this project is the ultimate test for your newly acquired skills.
+The final output should look like <a class="reference external" href="https://www.linkedin.com/posts/pranav-uikey-b49360140_machinelearning-sudoku-imageprocessing-activity-6715984089624694784-pGMX">this</a>.</p>
+<p>Here is a <a class="reference external" href="https://www.pyimagesearch.com/2020/08/10/opencv-sudoku-solver-and-ocr/">reference blog</a> to help you. We really hope that you will learn a lot while building this project.</p>
+</div>
+</div>
+<div class="section" id="things-to-learn-next">
+<h2>Things to learn next<a class="headerlink" href="#things-to-learn-next" title="Permalink to this headline">¶</a></h2>
+<p>We have touched most of the corners of OpenCV but there are many more libraries in python for working with images. Some of them are really good and you should definitely check them out:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://scikit-image.org/">skimage</a>: we have already used it to extract HOG features in the digit classification task. It has many more algorithms for image processing.</p></li>
+<li><p><a class="reference external" href="https://pillow.readthedocs.io/en/stable/">PIL</a>: is another great python library for working with images.</p></li>
+</ul>
+<p>The field of computer vision is much more than applying filters and extracting features. Computers are now good at a lot of image tasks and are having huge impact in peoples life. Computational protography, self driving cars, drones and robots, object tracking, security systems, etc are all examples of computer vision in action.</p>
+<p>All the state-of-the-art models, in all the above mentioned tasks, use deep learning. Deep Learning has proven itself again and again in all the computer vision tasks.</p>
+<p>From deep learning prespective most of the computer vision tasks belongs to one of these 4 types:</p>
+<ul class="simple">
+<li><p>Classification</p></li>
+<li><p>Localization</p></li>
+<li><p>Object detection</p></li>
+<li><p>Segmentation</p></li>
+</ul>
+<p>Look at the image below to understand what each of these task means</p>
+<p><img alt="" src="../_images/tasks.jpeg" /></p>
+<p>The multi object tasks (detection and segmentation) were considered very hard problems. But with deep learning, the state-of-the-art models can detect 100s of object in a frame and can process 40-50 such frames per second. This is much more than what we humans are capable of.</p>
+<p>There are many other applications of deep learning (with images) like:</p>
+<ul class="simple">
+<li><p><strong>Image captioning:</strong> Given an image, the deep learning model will describe it in words.</p></li>
+</ul>
+<p><img alt="" src="../_images/caption.png" /></p>
+<ul class="simple">
+<li><p><strong>Image generations:</strong> With the help of GANs, you can generate new images. Deep Fake, image inpainting, super-high resolution are all applications of the same. The very famous <em>faceapp</em> also used GANs to make you look old.</p></li>
+</ul>
+<p><img alt="" src="../_images/gans.png" /></p>
+<p>Instagram, snapchat and every other photo app makes extensive use of deep learning.</p>
+<p>Just like Computer Vision, we have full fledged courses on <em>Deep Learning</em>. You will be implementing everything that we mentioned above, in fact the above content is from the introduction notebook. We really recommend you to check our Deep Learning Course. We will be happy to help you in the process, again!</p>
+<p><strong>Keep Learning, Keep Growing!</strong></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./course_material"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="09_ocr.html" title="previous page">Optical Character Recognition(OCR)</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By aiadventures<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
