@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thresholding &#8212; Computer Vision Course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Machine Learning" href="06_machine_learning.html" />
+    <link rel="prev" title="Smoothing and blurring" href="04_blur.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_com.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computer Vision Course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_introduction.html">
+   Introduction to Computer vision
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_drawing.html">
+   More on pixels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_face_detection.html">
+   Face Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_blur.html">
+   Smoothing and blurring
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Thresholding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_machine_learning.html">
+   Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_digit_recognition.html">
+   Digit Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_feature_extraction.html">
+   Feature Extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_ocr.html">
+   Optical Character Recognition(OCR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_conclusion.html">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simple-thresholding">
+   Simple thresholding
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adaptive-thresholding">
+   Adaptive thresholding
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#otsus-binarization">
+   Otsu’s Binarization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#edge-detection">
+   Edge detection
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sobel-edge-detection">
+     Sobel Edge Detection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#laplacian-edge-detection">
+     Laplacian Edge Detection
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#canny-edge-detection">
+     Canny Edge Detection
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contours">
+   Contours
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kernels">
+   Kernels
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#questionaire">
+   Questionaire
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">imshow</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="thresholding">
+<h1>Thresholding<a class="headerlink" href="#thresholding" title="Permalink to this headline">¶</a></h1>
+<p>Thresholding is the <em>binarization of an image</em>. In general, we seek to convert a grayscale image to a binary image, where the pixels are either 0 or 255. A simple thresholding example would be selecting a threshold value <strong>p</strong>, and then setting all pixel intensities <strong>less than p to 0(black)</strong>, and all pixel values <strong>greater than p to 255(white)</strong>. In this way, we are able to create a binary representation of the image. Normally, we use thresholding to focus on objects or areas of particular interest in an image.</p>
+<p>It usually take two steps:</p>
+<ol class="simple">
+<li><p>Converting colored image to grayscale.</p></li>
+<li><p>Applying Thresholding on grayscale image.</p></li>
+</ol>
+<p>Just like smoothing, there are many techniques for thresholding. We will look at a few of them.</p>
+<div class="section" id="simple-thresholding">
+<h2>Simple thresholding<a class="headerlink" href="#simple-thresholding" title="Permalink to this headline">¶</a></h2>
+<p>It is the most easiest type of thresholding. Applying simple thresholding methods requires human intervention. We must specify a threshold value <strong>T</strong>. All pixel intensities below T are set to 0(black in color). And all pixel intensities greater than T are set to 255(white in color).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/coins2.jpg&#39;</span><span class="p">)</span>
+<span class="n">img_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We took an image, converted it to gray-scale and then applied gaussian blur to it, all usual stuff. We convert to grayscale since <code class="docutils literal notranslate"><span class="pre">cv2.threshold</span></code>  expects a single channel image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Thresholding&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">cv2.threshold</span></code>  then returns a tuple of two values. The first value, <code class="docutils literal notranslate"><span class="pre">T</span></code>, is the value that was used for the thresholding in the <code class="docutils literal notranslate"><span class="pre">cv2.threshold</span></code> function. The second value is our actual thresholded image.</p>
+<p>We pass our grayscale image as the first argument, threshold value as the second argument, 255 (white) as our value for when the threshold test passes as our third argument, and finally the threshold method itself as the final parameter.</p>
+<p>The thresholding method can be any of the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cv2.THRESH_BINARY</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv2.THRESH_BINARY_INV</span></code> : invert the output from <code class="docutils literal notranslate"><span class="pre">cv2.THRESH_BINARY</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv2.THRESH_TRUNC</span></code> : leaves the pixel intensities as they are if the source pixel is not greater than the supplied threshold.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv2.THRESH_TOZERO</span></code> : sets the source pixel to zero if the source pixel is not greater than the supplied threshold:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cv2.THRESH_TOZERO_INV</span></code> : invert the output from <code class="docutils literal notranslate"><span class="pre">cv2.THRESH_TOZERO</span></code></p></li>
+</ul>
+<p>As an excercise, try using all these thresholding method on the coin image. This will help you to understand these methods better.</p>
+<p>Check out OpenCV <a class="reference external" href="https://docs.opencv.org/trunk/d7/d4d/tutorial_py_thresholding.html">documentation</a> to know more type of styles of thresholding.</p>
+</div>
+<div class="section" id="adaptive-thresholding">
+<h2>Adaptive thresholding<a class="headerlink" href="#adaptive-thresholding" title="Permalink to this headline">¶</a></h2>
+<p>One of the downsides of using simple thresholding methods is that we need to manually supply our threshold value <strong>T</strong>. Not only does finding a good value of <strong>T</strong> require a lot of manual experiments and parameter tunings, it’s not very helpful if the image exhibits a lot of range in pixel intensities. Also, having just one value of <strong>T</strong> might not suffice.</p>
+<p>In order to overcome this problem, we can use <em>adaptive thresholding</em>, which considers small neighbors of pixels and then finds an optimal threshold value <strong>T</strong> for each neighbor. This method allows us to handle cases where there may be dramatic ranges of pixel intensities and the optimal value of <strong>T</strong> may change for different parts of the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thresh_mean</span>     <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">adaptiveThreshold</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ADAPTIVE_THRESH_MEAN_C</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY_INV</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">thresh_gaussian</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">adaptiveThreshold</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ADAPTIVE_THRESH_GAUSSIAN_C</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY_INV</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Mean Thresholding&#39;</span><span class="p">,</span> <span class="n">thresh_mean</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Gaussian Thresholding&#39;</span><span class="p">,</span> <span class="n">thresh_gaussian</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>we applied adaptive threshold using built-in method <code class="docutils literal notranslate"><span class="pre">cv2.adaptiveThreshold</span></code>. Here the parameter are as follows:</p>
+<ul class="simple">
+<li><p>first : blurred image,</p></li>
+<li><p>second : upper pixel threshold,</p></li>
+<li><p>third : adaptive method;</p></li>
+<li><p>fourth : thresholding style</p></li>
+<li><p>fifth : size of a pixel neighborhood that is used to calculate a threshold value for the pixel</p></li>
+<li><p>sixth : <em>C</em> value it is just a constant which is subtracted from the mean or weighted mean calculated.</p></li>
+</ul>
+<p>The third parameter, <em>adaptive method</em> have two possible values <code class="docutils literal notranslate"><span class="pre">cv2.ADAPTIVE_THRESH_MEAN_C</span></code> where threshold value is the mean of neighbourhood area, and <code class="docutils literal notranslate"><span class="pre">cv2.ADAPTIVE_THRESH_GAUSSIAN_C</span></code> where threshold value is the weighted sum of neighbourhood values where weights are a gaussian window.</p>
+</div>
+<div class="section" id="otsus-binarization">
+<h2>Otsu’s Binarization<a class="headerlink" href="#otsus-binarization" title="Permalink to this headline">¶</a></h2>
+<p>The last thresholding technique that we are going to discuss is called <em>Otsu’s binarization</em>.</p>
+<p>In other thresholding methods we have to decide a value of threshold value either with human intervention (simple thresholding) or using neighbor’s pixel value (adaptive thresholding). So, how can we know a value we selected is good or not? Answer is, trial and error method.</p>
+<p>But consider a <strong>bimodal image</strong> (In simple words, bimodal image is an image whose histogram has two peaks). For that image, we can approximately take a value in the middle of those peaks as threshold value, right? That is what Otsu binarization does. So in simple words, it automatically calculates a threshold value from image histogram for a bimodal image. (For images which are not bimodal, binarization won’t be accurate.)</p>
+<p><img alt="" src="../_images/otsu.jpg" /></p>
+<p>The red dotted line in the above figure shoes the threshold value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">th</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="o">+</span><span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">th_blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span> <span class="n">blurred</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="o">+</span><span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Thresholding w/o blur&#39;</span><span class="p">,</span> <span class="n">th</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Thresholding w/ blur&#39;</span><span class="p">,</span> <span class="n">th_blur</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>we first applied otsu binarization <strong>without blur</strong> using style <code class="docutils literal notranslate"><span class="pre">cv2.THRESH_OTSU</span></code> with <code class="docutils literal notranslate"><span class="pre">cv2.THRESH_BINARY</span></code> and then we applied otsu binarization <strong>with blur</strong> using the same style.</p>
+<p>If you look at the output you will see more clear image using otsu binarization with blur. Hence, its always recommended to smooth the image before applying any kind of thresholding.</p>
+<p>We now know, how to apply various thresholding techniques. But when and where to use them? This brings us to the application part of thresholding.</p>
+<p>We can use thresholding to create masks and then use this mask to overlay any image on top of the other.</p>
+<p><strong>Excercise:</strong></p>
+<ul class="simple">
+<li><p>Heres a great <a class="reference external" href="https://datacarpentry.org/image-processing/07-thresholding/">blog</a> showcasing some applications of thresholding. The bad new is that the code is written using <em>sk-image</em> library. We don’t know how to use it, but we know the concepts and we also know OpenCV. So, try recreating the examples using OpenCV. This will be a fun exercise.</p></li>
+</ul>
+</div>
+<div class="section" id="edge-detection">
+<h2>Edge detection<a class="headerlink" href="#edge-detection" title="Permalink to this headline">¶</a></h2>
+<p><strong>Gradient</strong> can be seen by transition from brightness to darkness or vice versa in an image. Dark-to-Light transition is taken as <em>Positive slope</em> (it has a positive value) while Light-to-Dark transition is taken as a <em>Negative slope</em> (it has negative value). Gradient of an image very important factor while performing Edge detection.</p>
+<p>All are different gradient functions which use different mathematical operations to produce the required image. For example, <em>Laplacian calculates laplacian derivative</em> whereas <em>sobel is joint gaussian and differenciation operation</em>. Don’t be overwhelmed by the details, just keep in mind that they are just different mathematical functions to analyse an image (you will see soon how).</p>
+<div class="section" id="sobel-edge-detection">
+<h3>Sobel Edge Detection<a class="headerlink" href="#sobel-edge-detection" title="Permalink to this headline">¶</a></h3>
+<p>Sobel operators is a joint Gausssian smoothing plus differentiation operation, so it is more resistant to noise. In Sobel edge detector we calculate the first order derivative/gradient in <strong>X</strong> (for horizontal change) and <strong>Y</strong>(for vertical change) direction separately.</p>
+<p>The operation uses two 3X3 kernels which are convolved with the original image to calculate approximations of the derivatives - one for horizontal changes, and one for vertical.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/sudoku.jpg&#39;</span><span class="p">)</span>
+<span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">blur</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">sobx</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Sobel</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CV_64F</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1">#Sobel X</span>
+<span class="n">soby</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Sobel</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CV_64F</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Sobel Y</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Sobel X&#39;</span><span class="p">,</span> <span class="n">sobx</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Sobel Y&#39;</span><span class="p">,</span> <span class="n">soby</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>we are using built-in method <code class="docutils literal notranslate"><span class="pre">cv2.Sobel</span></code>, in which the first parameter is source image, second parameter is data type of matrix <strong>cv2.CV_64F</strong> means <strong>64 bytes floating/double values</strong>. There are many possible values for data-type parameter. The third parameter is <span class="math notranslate nohighlight">\(d_x\)</span> tells us about the <em>order of the derivative in x direction</em> and fourth is <span class="math notranslate nohighlight">\(d_y\)</span> similar to <span class="math notranslate nohighlight">\(d_x\)</span>, tells us the <em>order of the derivative in y direction</em>. The fifth parameter is kernel size.</p>
+<p>You can read more about different possible values of data-type parameter, <a class="reference external" href="https://docs.opencv.org/master/d5/d0f/tutorial_py_gradients.html">here</a>.</p>
+</div>
+<div class="section" id="laplacian-edge-detection">
+<h3>Laplacian Edge Detection<a class="headerlink" href="#laplacian-edge-detection" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">laplacian</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Laplacian</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CV_64F</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Laplacian&#39;</span><span class="p">,</span> <span class="n">laplacian</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>the built-in method <code class="docutils literal notranslate"><span class="pre">cv2.Laplacian</span></code>, as always, the first parameter is source image and second parameter is matrix datatype. Unlike Sobel we do not have  <span class="math notranslate nohighlight">\(dx\)</span>  and  <span class="math notranslate nohighlight">\(dy\)</span>  because laplacian uses only one kernel.</p>
+</div>
+<div class="section" id="canny-edge-detection">
+<h3>Canny Edge Detection<a class="headerlink" href="#canny-edge-detection" title="Permalink to this headline">¶</a></h3>
+<p>Canny Edge Detection is similar on Sobel edge detection but a little better than that. Canny works by taking the output image of Sobel edge detection and then reduces the edges to 1 pixel in width.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">canny</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">Canny</span><span class="p">(</span><span class="n">blur</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Canny Edges&#39;</span><span class="p">,</span> <span class="n">canny</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">cv2.Canny</span></code> function, the second and third parameter are both threshold for the hysteresis procedure. The function finds edges in the input image image and marks them in the output map edges using the Canny algorithm. The smallest value between threshold1 (2nd parameter) and threshold2 (3rd parameter) is used for edge linking. The largest value is used to find initial segments of strong edges.</p>
+<p>As you see, both laplacian and canny edge detection algorithm perform really well when compared to simple sobel. The output images are much more readable and interpretable.</p>
+</div>
+</div>
+<div class="section" id="contours">
+<h2>Contours<a class="headerlink" href="#contours" title="Permalink to this headline">¶</a></h2>
+<p>Previously, we explored how to detect edges in an image. Now we are going to use these edges to help us find the actual objects in the image and interact with them.</p>
+<p>OpenCV provides methods to find “curves” in an image, called contours. A contour is a curve of points, with no gaps in the curve. Contours are extremely useful for such things as shape approximation and analysis.</p>
+<p>Just like everything else, opencv also provides a built-in function <code class="docutils literal notranslate"><span class="pre">cv2.findContours</span></code> for finding contours in an image. The function take a binary image as input. If the image is not binary, then non-zero pixels are treated as 1’s and zero pixels remain 0’s, so the image is treated as binary no matter what you pass.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/coins2.jpg&#39;</span><span class="p">)</span>
+<span class="n">img_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+<span class="n">blurred</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">img_gray</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">thresh</span><span class="p">)</span>    <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">blurred</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+<span class="n">contours</span><span class="p">,</span> <span class="n">hierarchy</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.findContours</span></code> takes two additional arguments along side the image. The second parameter is <em>Contour retrieval mode</em> adn the third argument is <em>Contour approximation method</em>. You can find all the <em>RetrievalModes</em>, <a class="reference external" href="https://docs.opencv.org/trunk/d3/dc0/group__imgproc__shape.html#ga819779b9857cc2f8601e6526a3a5bc71">here</a> and all the <em>ContourApproximationModes</em>, <a class="reference external" href="https://docs.opencv.org/trunk/d3/dc0/group__imgproc__shape.html#ga4303f45752694956374734a03c54d5ff">here</a>.</p>
+<p>Here, we are using contour retrieval mode as <code class="docutils literal notranslate"><span class="pre">cv2.RETR_EXTERNAL</span></code> it gives only outermost contour in the image to read more about this flag here and contour approximation method as <code class="docutils literal notranslate"><span class="pre">cv2.CHAIN_APPROX_NONE</span></code>, all the boundary points are stored. But actually do we need all the points? For eg, we found the contour of a straight line. Do we need all the points on the line to represent that line? No, we need just two end points of that line. This is what <code class="docutils literal notranslate"><span class="pre">cv2.CHAIN_APPROX_SIMPLE</span></code> does. It removes all redundant points and compresses the contour, thereby saving memory.</p>
+<p>The function returns two values: contours and hierarchy. contours is a Python list of all the contours in the image. Each individual contour is a Numpy array of (x,y) coordinates of boundary points of the object.</p>
+<p>Lets to draw these contours …</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawContours</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">contours</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Contours&#39;</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cv2.drawContours</span></code> is very similar to <code class="docutils literal notranslate"><span class="pre">cv2.rectangle</span></code> or <code class="docutils literal notranslate"><span class="pre">cv2.circle</span></code>. The first argument is the image, the 2nd argument is list of all the contours that we got from <code class="docutils literal notranslate"><span class="pre">cv2.findContours</span></code> function and the 3rd argument is the index of the contour to draw. If it is negative, all the contours are drawn. The 4th argument is the color and the 5th argument is thickness. Just like every other drawing function.</p>
+<p>Drawing contours is not the only thing that you want to do with the contours that you find. OpenCV provides you helper function to do basic things like calculating area and perimeter. Lets see how we can use them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cnt</span> <span class="o">=</span> <span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">area</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+<span class="n">perimeter</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">arcLength</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">area</span><span class="p">,</span> <span class="n">perimeter</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(124089.0, 1420.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The second argument in <code class="docutils literal notranslate"><span class="pre">cv2.arcLength</span></code> specify whether shape is a closed contour (if passed <code class="docutils literal notranslate"><span class="pre">True</span></code>), or just a curve.</p>
+<p>There are many other things that you can do with contours, you can learn all about them <a class="reference external" href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_contours/py_contour_features/py_contour_features.html">here</a></p>
+<p>At the end of the day, remember, every contour is a numpy array of (x,y) cordinates of boundary points. You can write your own algorithm to do something very specific with them.</p>
+<p><strong>Exercise:</strong></p>
+<ul class="simple">
+<li><p>We have implemented <a class="reference internal" href="../nbs/Lane_detection.html"><span class="doc std std-doc">lane detection</span></a>, used in self driving cars, using the techniques we learned above. Read the complete notebook and try re-creating the application from scratch.</p></li>
+</ul>
+</div>
+<div class="section" id="kernels">
+<h2>Kernels<a class="headerlink" href="#kernels" title="Permalink to this headline">¶</a></h2>
+<p>You might have noticed that many seemingly different tasks like smoothing, edge detection, etc. use the same idea of kernels (or convolution operations) under the hood. The convolution operation is used in deep learning as well.</p>
+<p>This is very surprising so I made a linkedIn post about it and many people reacted to it. One comment mentioned many more computer vision task/techniques that use convolution operations. You can find the post <a class="reference external" href="https://www.linkedin.com/posts/ankur-singh-ml_computervision-learning-deeplearning-activity-6709058872415461376-csEv">here</a>.</p>
+<p>Here are some resources that I recommend you to read to learn more about kernels:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://setosa.io/ev/image-kernels/">This blog</a> visually explains you what kernels are and how they work. The blog is very interactive and you can see the effect of different kernels in real-time. There are many pre-defined standard kernels and you can also make your own kernel.</p></li>
+<li><p><a class="reference external" href="https://youtu.be/8rrHTtUzyZA">This video</a> by Grant Sanderson, takes things further and explains what are kernels through great animations.</p></li>
+</ul>
+<p>Please read the blog and watch the video completely before moving any further.</p>
+</div>
+<div class="section" id="questionaire">
+<h2>Questionaire<a class="headerlink" href="#questionaire" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>What is thresholding and why is it important?</p></li>
+<li><p>Name a few thresholding techniques and their applications</p></li>
+<li><p>Why is edge detection important? What are its application?</p></li>
+<li><p>What are contours and how do you find them?</p></li>
+<li><p>Name atleast 5 things that you can do with contours.</p></li>
+</ul>
+<p>Sit tight, in the next notebook, we will introduce you to machine learning.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./course_material"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="04_blur.html" title="previous page">Smoothing and blurring</a>
+    <a class='right-next' id="next-link" href="06_machine_learning.html" title="next page">Machine Learning</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By aiadventures<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

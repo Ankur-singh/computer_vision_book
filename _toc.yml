@@ -1,0 +1,11 @@
+file: course_material/01_introduction
+sections:
+  - file: course_material/02_drawing
+  - file: course_material/03_face_detection
+  - file: course_material/04_blur
+  - file: course_material/05_thres_edge_contour
+  - file: course_material/06_machine_learning
+  - file: course_material/07_digit_recognition
+  - file: course_material/08_feature_extraction
+  - file: course_material/09_ocr
+  - file: course_material/10_conclusion

@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feature Extraction &#8212; Computer Vision Course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optical Character Recognition(OCR)" href="09_ocr.html" />
+    <link rel="prev" title="Digit Recognition" href="07_digit_recognition.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo_com.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Computer Vision Course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_introduction.html">
+   Introduction to Computer vision
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_drawing.html">
+   More on pixels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_face_detection.html">
+   Face Detection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_blur.html">
+   Smoothing and blurring
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_thres_edge_contour.html">
+   Thresholding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_machine_learning.html">
+   Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_digit_recognition.html">
+   Digit Recognition
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Feature Extraction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_ocr.html">
+   Optical Character Recognition(OCR)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_conclusion.html">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#harris-corner-detection">
+   Harris Corner Detection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sift-algorithm">
+   SIFT Algorithm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#features-from-accelerated-segment-test-fast">
+   Features from accelerated segment test (FAST)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binary-robust-independent-elementary-features-brief">
+   Binary Robust Independent Elementary Features(BRIEF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#orb">
+   ORB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#applications">
+   Applications
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="feature-extraction">
+<h1>Feature Extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will learn about diffirent techniques for extracting <em>corner features</em>.</p>
+<p>Why is a corner so special?
+Because, since it is the intersection of two edges, it represents a point in which the directions of these two edges change. Hence, the gradient of the image (in both directions) have a high variation, which can be useful in many computer vision applications.</p>
+<p>What algorithms are there to extract features? What are keypoints and descriptors?, and how to plot all these features in images? We will learn answers to all these questions. And towards the end we are going to see how all these features can be used in applications like face matching or book cover matching.</p>
+<p><strong>What is Feature ?</strong></p>
+<p>In computer vision, usually we need to find matching points between different frames of an environment. Why? If we know how two images relate to each other, we can use both images to extract information of them.
+When we say matching points we are referring, in a general sense, to characteristics in the scene that we can recognize easily. We call these characteristics features.</p>
+<p>So, what characteristics should a feature have? It must be uniquely recognizable. There are different types of Image Features, to mention a few:</p>
+<ul class="simple">
+<li><p>Edges</p></li>
+<li><p>Corners (also known as interest points)</p></li>
+<li><p>Blobs (also known as regions of interest)</p></li>
+</ul>
+<p>We are going to see the following Corner detection algorithms</p>
+<ul class="simple">
+<li><p>Harris corner detection</p></li>
+<li><p>SIFT (Scale-Invariant Feature Transform)</p></li>
+<li><p>FAST algorithm for corner detection*</p></li>
+</ul>
+<p>Let’s start with our first algorithm</p>
+<div class="section" id="harris-corner-detection">
+<h2>Harris Corner Detection<a class="headerlink" href="#harris-corner-detection" title="Permalink to this headline">¶</a></h2>
+<p>Corners are the important features in the image, and they are generally termed as interest points which are invariant to translation, rotation, and illumination. Harris corner detection technique is rotation,translation and illumination invariant that means even if the image is rotated, shifted or change brightness we will be able to detect the corners exactly. However they are scale variant, if the corners are zoomed we will loose the shape in the selected region and the detectors will not be able to identify them.</p>
+<p>That is one disadvantage of harris corner detection technique.</p>
+<p><img alt="" src="../_images/harris_corner.jpg" /></p>
+<p>Before starting import all the libraries needed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_img</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>
+
+<span class="k">def</span> <span class="nf">plot_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="s1">&#39;images/car.png&#39;</span><span class="p">)</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">dst</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cornerHarris</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="n">blockSize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">0.04</span><span class="p">)</span>
+<span class="c1"># dilate to mark the corners</span>
+<span class="n">dst</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">img</span><span class="p">[</span><span class="n">dst</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="n">dst</span><span class="o">.</span><span class="n">max</span><span class="p">())]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">plot_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_8_0.png" src="../_images/08_feature_extraction_8_0.png" />
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p>we are using built-in method <code class="docutils literal notranslate"><span class="pre">cv2.cornerHarris()</span></code> in which first parameter is gray scaled image, second parameter is blocksize(i.e. the size of neighborhood to be considered for corner detection), third parameter is ksize(kernel size), fourth parameter is <em>Harris detector free parameter</em> in the equation.</p></li>
+<li><p>then we do <strong>dialation</strong> on an image. It also means it increases the white region in the image or size of foreground object. <a class="reference external" href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html#dilation">Click here to know more about dialation</a>.</p></li>
+<li><p>After that we are applying some threshold on all the pixel value which are greater than 1% of maximum pixel value in <code class="docutils literal notranslate"><span class="pre">dst</span></code>. This allows us to filter out all the noise or misinterpreted corners from the image.</p></li>
+</ul>
+<p>So the <strong>advantanges</strong> are rotation, shift and illumination invariant and <strong>disadvantages</strong> is it’s scale invariant i.e it cannot detect corners when we scale up/down the image.</p>
+<p>This disadvantage is overcome by The SIFT algorithm. We will see SIFT Algorithm next.</p>
+</div>
+<div class="section" id="sift-algorithm">
+<h2>SIFT Algorithm<a class="headerlink" href="#sift-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>It’s full form is <strong>Scale Invariate Feature Transform</strong>. Here the name tells us that SIFT is going to be scale invariant. For example, check a simple image below. A corner in a small image within a small window is flat when it is zoomed in the same window.</p>
+<p><img alt="" src="../_images/small_corner.jpg" /></p>
+<p>We first have to create a <code class="docutils literal notranslate"><span class="pre">sift</span></code> object. just line we did for face haar cascade, remembered?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="s1">&#39;images/car.png&#39;</span><span class="p">)</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">sift</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">xfeatures2d</span><span class="o">.</span><span class="n">SIFT_create</span><span class="p">()</span> <span class="c1"># Creating an object</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">des</span> <span class="o">=</span> <span class="n">sift</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">kp_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawKeypoints</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> 
+                           <span class="n">kp</span><span class="p">,</span> 
+                           <span class="kc">None</span><span class="p">,</span> 
+                           <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> 
+                           <span class="n">flags</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span><span class="p">)</span>
+
+<span class="n">plot_img</span><span class="p">(</span><span class="n">kp_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_11_0.png" src="../_images/08_feature_extraction_11_0.png" />
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p>As you must have seen the implementation of SIFT is a bit different then other algorithms. we are using <code class="docutils literal notranslate"><span class="pre">cv2.xfeatures2d.SIFT_create()</span></code> to create an object and store it in <code class="docutils literal notranslate"><span class="pre">sift</span></code> variable.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sift.detectAndCompute()</span></code> directly find keypoints and descriptors in a single step. It takes two parameters first is source image and second is the mask if we want to search only a part of image. In return we get two things. First, all the keypoint in an image and second, is vector form of 128 bin oreientation of those keypoints.</p></li>
+<li><p>Finally, we use the built-in <code class="docutils literal notranslate"><span class="pre">cv2.drawKeypoints()</span></code> method, which have parameters as source image, the keypoints, the output image the tuple of 3 color channels and the last one is the flags. Here, we are passing  <code class="docutils literal notranslate"><span class="pre">cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS</span></code> to it, i.e. for each keypoint the circle around keypoint with keypoint size and orientation will be drawn. By default if flag is not provided it only draw the keypoint without the circle around it.</p></li>
+</ul>
+<p>SIFT is scale invariant but its very slow to compute tha keypoints and descriptors.</p>
+<p>To overcome this disadvantage we use FAST algorithm. Let’s see FAST next.</p>
+</div>
+<div class="section" id="features-from-accelerated-segment-test-fast">
+<h2>Features from accelerated segment test (FAST)<a class="headerlink" href="#features-from-accelerated-segment-test-fast" title="Permalink to this headline">¶</a></h2>
+<p>Detecting multiple interest points in adjacent locations is another problem. It is solved by using Non-maximum Suppression.</p>
+<p>Let’s now implement all the steps in these algorithm including non-maximal suppresssion to keep it true or false.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="s1">&#39;images/car.png&#39;</span><span class="p">)</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">fast</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FastFeatureDetector_create</span><span class="p">()</span>
+<span class="n">fast</span><span class="o">.</span><span class="n">setNonmaxSuppression</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">kp</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">kp_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawKeypoints</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">plot_img</span><span class="p">(</span><span class="n">kp_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_15_0.png" src="../_images/08_feature_extraction_15_0.png" />
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><p>we start by creating an object of fast feature detector using built-in method <code class="docutils literal notranslate"><span class="pre">cv2.FastFeatureDetector_create()</span></code> similar to sift implementation.</p></li>
+<li><p>we then set non-max suppression value as True (i.e turn on non-max suppression).</p>
+<p>The FAST algorithm works on pixel level, so it can detecting multiple interest points in adjacent locations. This would make the algorithm very slow. It is solved by using Non-maximum Suppression.</p>
+</li>
+<li><p>Finally to detect &amp; compute the keypoints and descriptors, we use <code class="docutils literal notranslate"><span class="pre">cv2.detectAndCompute()</span></code>.</p></li>
+</ul>
+<p>It’s advantage is that it is faster than all other algorithm and disadvantage is that FAST does not detect corners on computer-generated images that are perfectly aligned to the x-axes and y-axes.</p>
+</div>
+<div class="section" id="binary-robust-independent-elementary-features-brief">
+<h2>Binary Robust Independent Elementary Features(BRIEF)<a class="headerlink" href="#binary-robust-independent-elementary-features-brief" title="Permalink to this headline">¶</a></h2>
+<p>We can use binary strings as an efficient feature point descriptor, this approach is called BRIEF. BRIEF is very fast both to build and to match. BRIEF easily outperforms other fast descriptors such as SURF and SIFT in terms of speed and terms of recognition rate in many cases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="s1">&#39;images/car.png&#39;</span><span class="p">)</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">fast</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FastFeatureDetector_create</span><span class="p">()</span>
+<span class="n">fast</span><span class="o">.</span><span class="n">setNonmaxSuppression</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">kp</span> <span class="o">=</span> <span class="n">fast</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">brief</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">xfeatures2d</span><span class="o">.</span><span class="n">BriefDescriptorExtractor_create</span><span class="p">()</span>
+<span class="n">kp</span><span class="p">,</span><span class="n">des</span> <span class="o">=</span> <span class="n">brief</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="n">kp</span><span class="p">)</span>
+<span class="n">kp_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawKeypoints</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">plot_img</span><span class="p">(</span><span class="n">kp_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_19_0.png" src="../_images/08_feature_extraction_19_0.png" />
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul class="simple">
+<li><p>Above code is completely different from all the algorithms. As you see we are using fast keypoint detection along with brief descriptor. This is because BRIEF does not have <code class="docutils literal notranslate"><span class="pre">detect()</span></code> function, so it uses other algorithms to detect the keypoints and then use its <code class="docutils literal notranslate"><span class="pre">compute()</span></code> function.</p></li>
+<li><p>We are first using FAST algorithm to detect keypoints.</p></li>
+<li><p>Then we use BRIEF’s keypoint descriptor. And draw keypoints on the image.</p></li>
+</ul>
+</div>
+<div class="section" id="orb">
+<h2>ORB<a class="headerlink" href="#orb" title="Permalink to this headline">¶</a></h2>
+<p>ORB is an efficient open source alternative to SIFT and SURF. Even though it computes less key points when compared to SIFT and SURF yet they are effective. It uses FAST to detect the key points and BRIEF techniques to compute the image descriptors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="s1">&#39;images/car.png&#39;</span><span class="p">)</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+
+<span class="n">orb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ORB_create</span><span class="p">(</span><span class="n">nfeatures</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">des</span> <span class="o">=</span> <span class="n">orb</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">gray_img</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">kp_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawKeypoints</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plot_img</span><span class="p">(</span><span class="n">kp_img</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_22_0.png" src="../_images/08_feature_extraction_22_0.png" />
+</div>
+</div>
+<p>Now that you know how these techniques work, here are some interesting applications based on them.</p>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p><strong>Feature Matching</strong></p>
+<p>Lets load two different images of the harry potter book.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/harry.jpg&#39;</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image 1&#39;</span><span class="p">,</span> <span class="n">img1</span><span class="p">)</span>
+<span class="n">img1_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+<span class="n">img2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;images/harry2.jpg&#39;</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;Image 2&#39;</span><span class="p">,</span> <span class="n">img2</span><span class="p">)</span>
+<span class="n">img2_gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">destroyAllWindows</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, lets keypoints and descriptors from both the images, using SIFT</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sift</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">xfeatures2d</span><span class="o">.</span><span class="n">SIFT_create</span><span class="p">()</span> 
+<span class="n">kp1</span><span class="p">,</span> <span class="n">des1</span> <span class="o">=</span> <span class="n">sift</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">img1_gray</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">kp2</span><span class="p">,</span> <span class="n">des2</span> <span class="o">=</span> <span class="n">sift</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">img2_gray</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">BFMatcher</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">NORM_L2</span><span class="p">,</span> <span class="n">crossCheck</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">matches</span> <span class="o">=</span> <span class="n">bf</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">des1</span><span class="p">,</span> <span class="n">des2</span><span class="p">)</span>
+<span class="n">matches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
+
+<span class="c1"># draw first 10 matches</span>
+<span class="n">match_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawMatches</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">kp1</span><span class="p">,</span> <span class="n">img2</span><span class="p">,</span> <span class="n">kp2</span><span class="p">,</span> <span class="n">matches</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Display the best matching points</span>
+<span class="n">plot_img</span><span class="p">(</span><span class="n">match_img</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/08_feature_extraction_28_0.png" src="../_images/08_feature_extraction_28_0.png" />
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<p>Brute-Force matcher is simple. It takes the descriptor of one feature in first set and is matched with all other features in second set using some distance calculation. And the closest one is returned.</p>
+<p>For BF matcher, first we have to create the BFMatcher object using <code class="docutils literal notranslate"><span class="pre">cv2.BFMatcher()</span></code>. It takes two optional params. First one is <code class="docutils literal notranslate"><span class="pre">normType</span></code>. It specifies the distance metric to be used. By default, it is <code class="docutils literal notranslate"><span class="pre">cv2.NORM_L2</span></code>. It is good for SIFT, SURF. For binary string based descriptors like ORB, BRIEF, BRISK etc, <code class="docutils literal notranslate"><span class="pre">cv2.NORM_HAMMING</span></code> should be used, which used Hamming distance as measurement. Second param is boolean variable, <code class="docutils literal notranslate"><span class="pre">crossCheck</span></code> which is false by default. If it is true, Matcher returns only those matches with value (i,j) such that i-th descriptor in set A has j-th descriptor in set B as the best match and vice-versa. That is, the two features in both sets should match each other.</p>
+<p>Once it is created, we use <code class="docutils literal notranslate"><span class="pre">BFMatcher.match()</span></code> to return the best match. Just like we used <code class="docutils literal notranslate"><span class="pre">cv2.drawKeypoints()</span></code> to draw keypoints, <code class="docutils literal notranslate"><span class="pre">cv2.drawMatches()</span></code> helps us to draw the matches. It stacks two images horizontally and draw lines from first image to second image showing best matches.</p>
+<p>This features matching approach was used in old image search engines and Content based image retrieval systems. As of now, all the state-of-the-art systems use deep learning.</p>
+<p>There are many other applications of that still make use of these techniques. Here is a small list of such applications:</p>
+<ul class="simple">
+<li><p><strong>Documents Alignment:</strong> Just like camscanner app, you can also write an opencv program to align your documents. You can learn more, <a class="reference external" href="https://www.pyimagesearch.com/2020/08/31/image-alignment-and-registration-with-opencv/">here</a>.</p></li>
+<li><p><strong>Stitching images:</strong> You can easily create a panaroma image using opencv. Here is a <a class="reference external" href="https://www.pyimagesearch.com/2018/12/17/image-stitching-with-opencv-and-python/">blog</a> discussing the process in detail.</p></li>
+</ul>
+<p>In the next notebook, we will learn about another class of computer vision problem called Optical Character Recognition, OCR for short.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./course_material"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="07_digit_recognition.html" title="previous page">Digit Recognition</a>
+    <a class='right-next' id="next-link" href="09_ocr.html" title="next page">Optical Character Recognition(OCR)</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By aiadventures<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
